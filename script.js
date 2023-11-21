@@ -1,7 +1,7 @@
 
 //gets the current date and time
 function currentTime() {
-  var today = dayjs().format('MMM DD, YYYY [at] hh:mm');
+  var today = dayjs().format('MMM DD, YYYY [at] hh:mm a');
   document.getElementById("currentDay").innerText = today;
   let t = setTimeout(function () {
   currentTime()

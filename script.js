@@ -1,23 +1,92 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-$(function () {
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  //
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-  //
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  //
-  // TODO: Add code to display the current date in the header of the page.
+
+//gets the current date and time
+function currentTime() {
+  var today = dayjs().format('MMM DD, YYYY [at] hh:mm');
+  document.getElementById("currentDay").innerText = today;
+  let t = setTimeout(function () {
+  currentTime()
+}, 1000);
+}
+currentTime();
+
+
+//gets my time slots
+var timeSlot = document.getElementById("timeSlots");
+
+var timeBlock = [
+  "9 am",
+  "10 am",
+  "11 am",
+  "12 pm",
+  "1 pm",
+  "2 pm",
+  "3 pm",
+  "4 pm",
+  "5 pm"
+]
+
+generateTimeSlots();
+function generateTimeSlots() {
+  timeSlot.innerhtml = "";
+
+  for (let i = 0; i < timeBlock.length; i++) {
+    var hourRow = timeBlock[i];
+
+    var row = document.createElement('div');
+    row.classList.add('row' , 'time-block');
+    timeSlot.appendChild(row);
+
+    var hour = document.createElement('div');
+    hour.innerHTML = hourRow;
+    hour.className= "col-2 col-md-1 hour text-center py-3";
+    row.appendChild(hour);
+
+    var textarea = document.createElement('textarea');
+    textarea.placeholder = "text";
+    textarea.setAttribute('class', 'col-8 col-md-10 description');
+    textarea.setAttribute('id', i);
+    row.appendChild(textarea);
+
+
+    var saveBtn = document.createElement('button');
+    saveBtn.textContent = 'save';
+    saveBtn.className= 'btn saveBtn col-2 col-md-1';
+    saveBtn.setAttribute('value' , i);
+    row.appendChild(saveBtn);
+  }
+}
+
+// save button 
+$(document).on('click', '.saveBtn' , function(){
+  var saveBtnValue = saveBtnValue.val();
+  var description = document ('.saveBtnValue').value;
+  localStorage.setItem(saveBtnValue, description);
 });
+
+//changes the timeslots colors based off of the hour
+function coloredTimeslots(){
+  var getCurrentTime = dayjs().format('h a');
+  var currentTime = dayjs(getCurrentTime, 'h a');
+  var description = document.getElementsByClassName('description');
+
+  for( var i = 0; i < description.length; i++){
+    var currentTimeBlock = (timeBlock[i], 'h a');
+
+    if(currentTime.isSame(currentTimeBlock) === true){
+      description[i].classList.remove('past')
+      description[i].classList.add('present')
+      description[i].classList.remove('future')
+    } else if(currentTime.isBefore(currentTimeBlock) === true){
+      description[i].classList.remove('past')
+      description[i].classList.remove('present')
+      description[i].classList.add('future')
+    }else if(currentTime.isBefore(currentTimeBlock) === false){
+      description[i].classList.add('past')
+      description[i].classList.remove('present')
+      description[i].classList.remove('future')
+
+    }
+  }
+  }
+  coloredTimeslots();
+  setInterval(coloredTimeslots, 1000);

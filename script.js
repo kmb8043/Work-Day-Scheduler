@@ -63,6 +63,8 @@ $(document).on('click', $('.saveBtn') , function(){
   localStorage.setItem(saveBtnValue, description);
 });
 
+
+
 //changes the timeslots colors based off of the hour
 function coloredTimeslots(){
   var getCurrentTime = dayjs().format('h a');

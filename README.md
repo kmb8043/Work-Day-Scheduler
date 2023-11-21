@@ -9,7 +9,7 @@ Below the title the user will see the current date and time.
 Below the time are the time slots.
 Each time slot accounts for one hour. 
 The user can input text and save it. It saves the information to the local storage.
-The time slots are colored coded. Grey for the past, green for the current, and red for the future time and tasks. 
+The time slots are colored coded. Grey for the past, red for the current, and green for the future time and tasks. 
 
 ## Usage
 This simple day planner is meant to help the user keep track of tasks and events during regular business hours.

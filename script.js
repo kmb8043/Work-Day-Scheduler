@@ -57,9 +57,9 @@ function generateTimeSlots() {
 }
 
 // save button 
-$(document).on('click', '.saveBtn' , function(){
-  var saveBtnValue = saveBtnValue.val();
-  var description = document ('.saveBtnValue').value;
+$(document).on('click', $('.saveBtn') , function(){
+  var saveBtnValue = saveBtn.val();
+  var description = document.$('.saveBtnValue').value;
   localStorage.setItem(saveBtnValue, description);
 });
 
